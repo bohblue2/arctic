@@ -707,10 +707,11 @@ class TickStore(object):
         rowmask = Binary(lz4_compressHC(np.packbits(np.ones(len(df), dtype='uint8')).tostring()))
 
         index_name = df.index.names[0] or "index"
-        if PD_VER < '0.23.0':
-            recs = df.to_records(convert_datetime64=False)
-        else:
-            recs = df.to_records()
+        # Hot Fix
+        #if PD_VER < '0.23.0':
+        #    recs = df.to_records(convert_datetime64=False)
+        #else:
+        recs = df.to_records()
 
         for col in df:
             array = TickStore._ensure_supported_dtypes(recs[col])
